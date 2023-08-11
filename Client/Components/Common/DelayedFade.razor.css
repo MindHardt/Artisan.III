@@ -1,0 +1,10 @@
+@keyframes delayed-fade-in {
+    0% {
+        filter: opacity(0%);
+        transform: scale(80%);
+    }
+    100% {
+        filter: opacity(100%);
+        transform: scale(100%);
+    }
+}

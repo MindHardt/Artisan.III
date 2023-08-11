@@ -1,0 +1,36 @@
+﻿@inject ILogger<DelayedFade> Logger
+
+<div style="@_style">
+    @ChildContent
+</div>
+
+@code {
+    private string _style = "filter: opacity(0%);";
+    private Timer _timer = null!;
+
+    [Parameter]
+    public TimeSpan Duration { get; set; } = TimeSpan.FromSeconds(1);
+
+    [Parameter]
+    public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _style = "filter: opacity(0%);";
+        Logger.LogDebug("Set delayed fade initial style to \"{Style}\"", _style);
+        _timer = new Timer(_ =>
+        {
+            _style = GetStyle();
+            Logger.LogDebug("Set delayed fade style to \"{Style}\"", _style);
+            
+            StateHasChanged();
+            _timer.Dispose();
+        }, null, Delay, Timeout.InfiniteTimeSpan);
+    }
+
+    private string GetStyle() => $"animation: delayed-fade-in {Duration.TotalSeconds.ToCssString()}s; animation-fill-mode: forwards;";
+
+}

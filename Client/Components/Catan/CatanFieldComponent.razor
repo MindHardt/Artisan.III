@@ -1,0 +1,76 @@
+﻿@using Artisan.III.Shared.Models.Catan
+@using Artisan.III.Shared.Models.Catan.Hexes
+@using Artisan.III.Client.Components.Common
+@using System.Globalization
+
+@foreach (var (hex, i) in Model.Hexes.Select((h, i) => (h, i)))
+{
+    <DelayedFade Delay="@TimeSpan.FromMilliseconds(i * 100)">
+        <div style="@GetHexStyle(hex.Coordinates); position: absolute">
+            <CatanHexComponent Model="@hex"/>
+        </div>
+    </DelayedFade>
+}
+@foreach (var (settlement, i) in Model.Settlements.Select((s, i) => (s, i)))
+{
+    <DelayedFade Delay="@TimeSpan.FromMilliseconds((Model.Hexes.Length + i) * 100)">
+        <div style="@GetSettlementStyle(settlement.Coordinates); position: absolute">
+            <CatanSettlementComponent Model="@settlement"/>
+        </div>
+    </DelayedFade>
+}
+
+
+@code {
+    private int _rowCount;
+    private int _columnCount;
+    private float _hexHeightPercent;
+    private float _hexWidthPercent;
+    private float _settlementTokenDiameterPercent;
+    private float _settlementWidthPercent;
+
+    [Parameter, EditorRequired]
+    public CatanFieldModel Model { get; set; } = null!;
+
+    protected override void OnParametersSet()
+    {
+        _rowCount = Model.Hexes
+            .Select(x => x.Coordinates.Row)
+            .Distinct()
+            .Count();
+        _columnCount = Model.Hexes
+            .Select(x => x.Coordinates.Column)
+            .Distinct()
+            .Count();
+        _hexHeightPercent = 200f / (_rowCount + 1);
+        var totalWidthInRadii = _columnCount * 1.5f + 0.5f;
+        _hexWidthPercent = 100f / totalWidthInRadii * 2f;
+        
+        _settlementTokenDiameterPercent = _hexHeightPercent / 3;
+    }
+
+    private string GetHexStyle(HexCoordinates coords) =>
+        $"left: {GetHexLeftOffsetPercent(coords).ToCssString()}%;" +
+        $"top: {GetHexTopOffsetPercent(coords).ToCssString()}%;" +
+        $"width: {_hexWidthPercent.ToCssString()}%;" +
+        $"height: {_hexHeightPercent.ToCssString()}%";
+
+    private float GetHexLeftOffsetPercent(HexCoordinates coords) =>
+        (coords.ColumnNumber / 2 - 1f) / (_columnCount + 0.40f) * 100;
+
+    private float GetHexTopOffsetPercent(HexCoordinates coords) =>
+        (coords.Row - 1) / (_rowCount + 1f) * 100;
+
+    private string GetSettlementStyle(HexCoordinates coords) =>
+        $"left: {GetSettlementLeftOffsetPercent(coords).ToCssString()}%;" +
+        $"top: {GetSettlementTopOffsetPercent(coords).ToCssString()}%;" +
+        $"width: {_settlementTokenDiameterPercent.ToCssString()}%;" +
+        $"height: {_settlementTokenDiameterPercent.ToCssString()}%";
+
+    private float GetSettlementLeftOffsetPercent(HexCoordinates coords) =>
+        coords.GetNeighbours().DistinctBy(x => x.ColumnNumber).Average(GetHexLeftOffsetPercent);
+    
+    private float GetSettlementTopOffsetPercent(HexCoordinates coords) =>
+        coords.GetNeighbours().DistinctBy(x => x.Row).Average(GetHexTopOffsetPercent);
+
+}

@@ -1,0 +1,19 @@
+﻿@using Artisan.III.Shared.Models.Catan.Hexes
+
+<div class="component-base">
+    <img src="@GetSrc()" alt="@Model.Type" />
+    @if (Model.Chit.HasValue)
+    {
+        <span style="font-size: @GetNumberSize(); color: @GetNumberColor()" class="numberToken">@Model.Chit</span>
+    }
+</div>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public HexModel Model { get; set; } = null!;
+
+    private string GetSrc() => $"images/Catan/Hexes/{Model.Type}.png";
+    private string GetNumberColor() => Model.Chit?.Number is >= 6 and <= 8 ? "red" : "black";
+    private string GetNumberSize() => $"{175 - Math.Abs(Model.Chit!.Value - 7) * 10}%";
+}

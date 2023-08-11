@@ -1,15 +1,13 @@
 ﻿@using Artisan.III.Shared.Models.Catan.Buildings
+@using Artisan.III.Shared.Models.Catan
 
-<div class="component-base">
-    <svg xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50%" cy="50%" r="50%" fill="@Model.Color" />
-    </svg>    
-    <img src="@GetSrc()" alt="@Model.Kind" style="transform: scale(0.8)"/>
+<div class="component-base" style="@Model.Color.ToCssFilter()">
+    <img src="@GetSrc()" alt="@Model.Kind @Model.Color"/>
 </div>
 
 @code {
     [Parameter, EditorRequired]
     public SettlementModel Model { get; set; } = null!;
     
-    private string GetSrc() => $"images/Catan/Tokens/{Model.Kind}.png";
+    private string GetSrc() => $"images/Catan/Settlements/{Model.Kind}.svg";
 }

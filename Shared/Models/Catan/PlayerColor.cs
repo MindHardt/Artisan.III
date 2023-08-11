@@ -5,10 +5,10 @@
 /// </summary>
 public enum PlayerColor : byte
 {
-    White,
+    Gray,
     Red,
     Blue,
     Orange,
     Green,
-    Brown
+    Pink
 }

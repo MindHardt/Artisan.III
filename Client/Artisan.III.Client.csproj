@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\images\Catan\" />
+      <Folder Include="wwwroot\images\Catan\Settlements\" />
     </ItemGroup>
 
 </Project>

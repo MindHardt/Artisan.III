@@ -111,12 +111,12 @@ public readonly record struct HexCoordinates(
 
     private IEnumerable<HexCoordinates> GetNeighborsHex()
     {
-        yield return this with { Row = (byte)(Row - 1), Column = (char)(Column - 1) };
-        yield return this with { Row = (byte)(Row - 1), Column = (char)(Column + 1) };
+        yield return new HexCoordinates(Row: (byte)(Row - 1), Column: (char)(Column - 1));
+        yield return new HexCoordinates(Row: (byte)(Row - 1), Column: (char)(Column + 1));
         yield return this with { Column = (char)(Column + 1) };
         yield return this with { Column = (char)(Column - 1) };
-        yield return this with { Row = (byte)(Row + 1), Column = (char)(Column - 1) };
-        yield return this with { Row = (byte)(Row + 1), Column = (char)(Column + 1) };
+        yield return new HexCoordinates(Row: (byte)(Row + 1), Column: (char)(Column - 1));
+        yield return new HexCoordinates(Row: (byte)(Row + 1), Column: (char)(Column + 1));
     }
 
     private IEnumerable<HexCoordinates> GetNeighborsCrossroad()

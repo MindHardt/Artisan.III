@@ -33,7 +33,17 @@ public record CatanFieldDisplayHelper(int RowCount, int ColumnCount)
 
     private Style GetCrossroadStyle(HexCoordinates coords)
     {
-
+        var neighbors = coords.GetNeighbors()
+            .ToArray();
+        float left = neighbors
+            .Select(x => x.ColumnNumber)
+            .Select(x => (float)x)
+            .Average();
+        float top = neighbors
+            .Select(x => x.Row)
+            .Select(x => (float)x)
+            .Average();
+        return new Style(left, top, _settlementTokenSidePercent, _settlementTokenSidePercent);
     }
 
     private static int GetRowCount(IEnumerable<HexModel> hexes) => hexes
@@ -51,6 +61,6 @@ public record CatanFieldDisplayHelper(int RowCount, int ColumnCount)
             $"left: {Left.ToCssString()}%;" +
             $"top: {Top.ToCssString()}%;" +
             $"width: {Width.ToCssString()}%;" +
-            $"height: {Height.ToCssString()}%";
+            $"height: {Height.ToCssString()}%;";
     }
 }

@@ -51,7 +51,7 @@ public class CatanFieldFaker : IFaker<CatanFieldModel>
         => new(_coordinatesProvider.GetCoordinates(gameExtensions));
 
     private SettlementModel[] GetBuildings(IEnumerable<HexModel> hexes, Random random) => hexes
-        .Select(x => x.Coordinates.GetNeighbours())
+        .Select(x => x.Coordinates.GetNeighbors())
         .SelectMany(x => x)
         .Distinct()
         .Shuffle(random)

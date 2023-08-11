@@ -96,20 +96,20 @@ public readonly record struct HexCoordinates(
     #region Neighbours
 
     /// <summary>
-    /// Gets neighbours of different <see cref="Kind"/>.
+    /// Gets neighbors of different <see cref="Kind"/>.
     /// For <see cref="HexCoordinateKind.Hex"/> gets all six crossroads around it.
     /// For <see cref="HexCoordinateKind.Crossroad"/> gets up to three hexes around it.
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public IEnumerable<HexCoordinates> GetNeighbours() => Kind switch
+    public IEnumerable<HexCoordinates> GetNeighbors() => Kind switch
     {
-        HexCoordinateKind.Hex => GetNeighboursHex(),
-        HexCoordinateKind.Crossroad => GetNeighboursCrossroad(),
+        HexCoordinateKind.Hex => GetNeighborsHex(),
+        HexCoordinateKind.Crossroad => GetNeighborsCrossroad(),
         _ => throw new ArgumentOutOfRangeException()
     };
 
-    private IEnumerable<HexCoordinates> GetNeighboursHex()
+    private IEnumerable<HexCoordinates> GetNeighborsHex()
     {
         yield return this with { Row = (byte)(Row - 1), Column = (char)(Column - 1) };
         yield return this with { Row = (byte)(Row - 1), Column = (char)(Column + 1) };
@@ -119,20 +119,20 @@ public readonly record struct HexCoordinates(
         yield return this with { Row = (byte)(Row + 1), Column = (char)(Column + 1) };
     }
 
-    private IEnumerable<HexCoordinates> GetNeighboursCrossroad()
+    private IEnumerable<HexCoordinates> GetNeighborsCrossroad()
     {
         bool isLeftPosition = (Row + ColumnNumber / 2).IsEven();
         if (IsTopBorder is false) // north
         {
             yield return isLeftPosition
-                ? this with { Row = (byte)(Row - 1), Column = (char)(Column + 1) }
-                : this with { Row = (byte)(Row - 1), Column = (char)(Column - 1) };
+                ? new HexCoordinates(Row: (byte)(Row - 1), Column: (char)(Column + 1))
+                : new HexCoordinates(Row: (byte)(Row - 1), Column: (char)(Column - 1));
         }
         if (IsBottomBorder is false) // south
         {
             yield return isLeftPosition
-                ? this with { Row = (byte)(Row + 1), Column = (char)(Column + 1) }
-                : this with { Row = (byte)(Row + 1), Column = (char)(Column - 1) };
+                ? new HexCoordinates(Row: (byte)(Row + 1), Column: (char)(Column + 1))
+                : new HexCoordinates(Row: (byte)(Row + 1), Column: (char)(Column - 1));
         }
         if (IsLeftBorder is false && isLeftPosition) // west
         {
@@ -151,7 +151,7 @@ public readonly record struct HexCoordinates(
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool IsNeighbourTo(HexCoordinates other) =>
+    public bool IsNeighborTo(HexCoordinates other) =>
         Math.Abs(ColumnNumber - other.ColumnNumber) <= 2 &&
         Math.Abs(Row - other.Row) <= 2;
 }

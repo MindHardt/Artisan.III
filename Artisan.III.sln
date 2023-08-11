@@ -1,12 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artisan.III.Server", "Server\Artisan.III.Server.csproj", "{E3DC08F7-9DAA-4A46-8705-2F4747F0FF86}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artisan.III.Server", "Server\Artisan.III.Server.csproj", "{E3DC08F7-9DAA-4A46-8705-2F4747F0FF86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artisan.III.Client", "Client\Artisan.III.Client.csproj", "{2950E4C3-828A-4EFA-BC3C-768301F3135D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artisan.III.Client", "Client\Artisan.III.Client.csproj", "{2950E4C3-828A-4EFA-BC3C-768301F3135D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artisan.III.Shared", "Shared\Artisan.III.Shared.csproj", "{EA68CA05-6F9F-4388-9F82-8F8792BFDA7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artisan.III.Shared", "Shared\Artisan.III.Shared.csproj", "{EA68CA05-6F9F-4388-9F82-8F8792BFDA7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artisan.III.Tests", "Tests\Artisan.III.Tests.csproj", "{0680D3F5-890F-4721-9E4B-2D0DE5DD9ED7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artisan.III.Tests", "Tests\Artisan.III.Tests.csproj", "{0680D3F5-890F-4721-9E4B-2D0DE5DD9ED7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{1A91EBC1-CA3A-4624-B699-BEAFACC99123}"
+	ProjectSection(SolutionItems) = preProject
+		Misc\HexCoordinates.svg = Misc\HexCoordinates.svg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +38,11 @@ Global
 		{0680D3F5-890F-4721-9E4B-2D0DE5DD9ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0680D3F5-890F-4721-9E4B-2D0DE5DD9ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0680D3F5-890F-4721-9E4B-2D0DE5DD9ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C63BBE1-6C9F-4AAC-A03F-DA60F5C39904}
 	EndGlobalSection
 EndGlobal

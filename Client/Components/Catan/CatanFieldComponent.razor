@@ -68,9 +68,9 @@
         $"height: {_settlementTokenDiameterPercent.ToCssString()}%";
 
     private float GetSettlementLeftOffsetPercent(HexCoordinates coords) =>
-        coords.GetNeighbours().DistinctBy(x => x.ColumnNumber).Average(GetHexLeftOffsetPercent) + _hexHeightPercent / 2;
+        coords.GetNeighbors().DistinctBy(x => x.ColumnNumber).Average(GetHexLeftOffsetPercent) + _hexHeightPercent / 2;
     
     private float GetSettlementTopOffsetPercent(HexCoordinates coords) =>
-        coords.GetNeighbours().DistinctBy(x => x.Row).Average(GetHexTopOffsetPercent) + _hexHeightPercent / 3;
+        coords.GetNeighbors().DistinctBy(x => x.Row).Average(GetHexTopOffsetPercent) + _hexHeightPercent / 3;
 
 }

@@ -1,36 +1,14 @@
-﻿@using Artisan.III.Shared.Models.Catan
-@using Artisan.III.Shared.Models.Catan.Hexes
-@using Artisan.III.Client.Components.Common
-@using System.Globalization
+﻿@using Artisan.III.Client.Components.Common
 
-@foreach (var (hex, i) in Model.Hexes.Select((h, i) => (h, i)))
+@foreach (var hex in Model.Hexes)
 {
-    <DelayedFade Delay="@TimeSpan.FromMilliseconds(i * 100)">
-        <div style="@_displayHelper.GetPositionStyle(hex.Coordinates); position: absolute">
-            <CatanHexComponent Model="@hex"/>
-        </div>
-    </DelayedFade>
+    <div style="@GetPositionStyle(hex.Coordinates); position: absolute">
+        <CatanHexComponent Model="@hex"/>
+    </div>
 }
-@foreach (var (settlement, i) in Model.Settlements.Select((s, i) => (s, i)))
+@foreach (var settlement in Model.Settlements)
 {
-    <DelayedFade Delay="@TimeSpan.FromMilliseconds((Model.Hexes.Length + i) * 100)">
-        <div style="@_displayHelper.GetPositionStyle(settlement.Coordinates); position: absolute">
-            <CatanSettlementComponent Model="@settlement"/>
-        </div>
-    </DelayedFade>
-}
-
-
-@code {
-
-    [Parameter, EditorRequired]
-    public CatanFieldModel Model { get; set; } = null!;
-
-    private CatanFieldDisplayHelper _displayHelper = null!;
-
-    protected override void OnParametersSet()
-    {
-        _displayHelper = new CatanFieldDisplayHelper(Model);
-    }
-
+    <div style="@GetPositionStyle(settlement.Coordinates); position: absolute">
+        <CatanSettlementComponent Model="@settlement"/>
+    </div>
 }

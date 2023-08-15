@@ -1,7 +1,7 @@
 ﻿@using Artisan.III.Shared.Models.Catan.Buildings
 @using Artisan.III.Shared.Models.Catan
 
-<div class="component-base" style="@Model.Color.ToCssFilter()">
+<div class="component-base" style="@Model.Color.ToCssFilter()" title="@Model.Coordinates">
     <img src="@GetSrc()" alt="@Model.Kind @Model.Color"/>
 </div>
 

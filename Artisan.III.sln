@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{1A91EBC1-CA3A-4624-B699-BEAFACC99123}"
 	ProjectSection(SolutionItems) = preProject
 		Misc\HexCoordinates.svg = Misc\HexCoordinates.svg
+		Misc\Settlements.svg = Misc\Settlements.svg
 	EndProjectSection
 EndProject
 Global

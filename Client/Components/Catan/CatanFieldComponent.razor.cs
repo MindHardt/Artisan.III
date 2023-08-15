@@ -7,6 +7,7 @@ namespace Artisan.III.Client.Components.Catan;
 
 public partial class CatanFieldComponent
 {
+    private byte _topRow;
     private float _rowCount;
     private float _columnCount;
     private float _hexWidth;
@@ -16,15 +17,14 @@ public partial class CatanFieldComponent
     
     [Parameter, EditorRequired]
     public CatanFieldModel Model { get; set; } = null!;
-    [Inject]
-    public ILogger<CatanFieldComponent> Logger { get; set; } = null!;
 
     protected override void OnParametersSet()
     {
+        _topRow = Model.Hexes.Min(x => x.Coordinates.Row);
         _rowCount = Model.Hexes.Select(x => x.Coordinates.Row).Distinct().Count();
         _columnCount = Model.Hexes.Select(x => x.Coordinates.Column).Distinct().Count();
-        _hexWidth = 200f / (_rowCount + 1);
-        _hexHeight = 100f / (_columnCount * 1.5f + 0.5f) * 2f;
+        _hexWidth = 100f / (0.25f + _columnCount * 0.75f);
+        _hexHeight = 100f / (0.5f + _rowCount * 0.5f);
         _settlementSize = _hexWidth / 3;
     }
 
@@ -45,11 +45,9 @@ public partial class CatanFieldComponent
 
     private Position GetHexPosition(HexCoordinates coords)
     {
-        float left = (0.5f + (coords.ColumnNumber - 1) / 2 * 0.75f) * _hexWidth;
-        float top = coords.Row * 0.5f * _hexHeight;
-        var pos = new Position(left, top);
-        Logger.LogInformation("Position of hex {Coords} is {Pos}", coords, pos);
-        return pos;
+        float left = (0.25f + (coords.ColumnNumber - 1) * 0.75f) / 2 * _hexWidth;
+        float top = (coords.Row - _topRow + 1) * 0.5f * _hexHeight;
+        return new Position(left, top);
     }
 
     private Style GetCrossroadStyle(HexCoordinates coords)
@@ -62,14 +60,12 @@ public partial class CatanFieldComponent
 
     private Position GetCrossRoadPosition(HexCoordinates coords)
     {
-        int effectiveColumn = coords.ColumnNumber >> 1;
-        float columnOffset = effectiveColumn.IsEven() ? 0.5f : 0f;
+        int effectiveColumn = (coords.ColumnNumber) >> 1;
+        float columnOffset = (effectiveColumn + coords.Row).IsEven() ? 0.25f : 0f;
         
-        float left = effectiveColumn * _hexWidth + columnOffset;
-        float top = (coords.Row - 1) * _hexHeight / 2;
-        var pos = new Position(left, top);
-        Logger.LogInformation("Position of crossroad {Coords} is {Pos}", coords, pos);
-        return pos;
+        float left = (effectiveColumn * 0.75f + columnOffset) * _hexWidth;
+        float top = (coords.Row - _topRow + 1) * _hexHeight / 2;
+        return new Position(left, top);
     }
 
     #region Intermediate Structs

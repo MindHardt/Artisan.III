@@ -12,4 +12,6 @@ builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(baseAddre
 
 builder.Services.AddDebugApi(baseAddress);
 
+builder.Services.AutoRegister();
+
 await builder.Build().RunAsync();
